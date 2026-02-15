@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHOOP LAB - เข้าใจ Data ตัดสินใจมั่นใจ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== RESET & BASE ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light theme - white base */
+            --bg-white: #FFFFFF;
+            --bg-off: #F5F7F8;
+            --bg-dark: #0D0D0D;
+            --bg-dark-soft: #1A1A1A;
+
+            /* Text */
+            --text-primary: #1A1A1A;
+            --text-secondary: #555555;
+            --text-muted: #888888;
+            --text-on-dark: #FFFFFF;
+            --text-on-dark-muted: #AAAAAA;
+
+            /* Accent */
+            --turquoise: #00BFA6;
+            --turquoise-dark: #009E8B;
+            --turquoise-light: #E0FBF6;
+            --turquoise-border: rgba(0, 191, 166, 0.25);
+
+            /* Utility */
+            --border: #E5E7EB;
+            --border-dark: #2A2A2A;
+            --red-soft: #E74C3C;
+            --red-bg: #FEF2F2;
+            --green-bg: #F0FDF9;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.75;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== LAYOUT ========== */
+        .section {
+            padding: 80px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: var(--bg-off);
+        }
+
+        .full-width {
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== TYPOGRAPHY ========== */
+        .headline {
+            font-size: clamp(1.75rem, 5vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .headline .accent {
+            color: var(--turquoise);
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--turquoise);
+            margin-bottom: 16px;
+            padding: 5px 14px;
+            background: var(--turquoise-light);
+            border-radius: 20px;
+        }
+
+        .section-label-dark {
+            background: rgba(0, 191, 166, 0.15);
+            color: var(--turquoise);
+        }
+
+        .section-title {
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+        }
+
+        .body-text {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .bold-text {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* ========== CTA BUTTON ========== */
+        .cta-wrapper {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 48px;
+            background: var(--bg-dark);
+            color: var(--text-on-dark);
+            font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: var(--bg-dark-soft);
+        }
+
+        .cta-btn-turquoise {
+            background: var(--turquoise);
+            color: var(--bg-dark);
+        }
+
+        .cta-btn-turquoise:hover {
+            background: var(--turquoise-dark);
+            color: var(--bg-dark);
+        }
+
+        .cta-btn-large {
+            padding: 20px 64px;
+            font-size: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .cta-btn-on-dark {
+            background: var(--turquoise);
+            color: var(--bg-dark);
+        }
+
+        .cta-btn-on-dark:hover {
+            background: var(--turquoise-dark);
+        }
+
+        /* ========== HERO SECTION (DARK) ========== */
+        .hero-wrapper {
+            background: var(--bg-dark);
+            color: var(--text-on-dark);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 24px 80px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--turquoise);
+            background: rgba(0, 191, 166, 0.1);
+            padding: 6px 20px;
+            border-radius: 20px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(0, 191, 166, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .hero .headline {
+            margin-bottom: 8px;
+            color: var(--text-on-dark);
+        }
+
+        .hero-timeframe {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: var(--turquoise);
+            margin-bottom: 24px;
+        }
+
+        .hero-target {
+            font-size: 1rem;
+            color: var(--text-on-dark-muted);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        /* Hero glow */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 191, 166, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== PAIN SECTION ========== */
+        .pain-list {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .pain-list li {
+            padding: 14px 0 14px 36px;
+            position: relative;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pain-list li:last-child {
+            border-bottom: none;
+        }
+
+        .pain-list li::before {
+            content: '✕';
+            position: absolute;
+            left: 4px;
+            top: 14px;
+            color: var(--red-soft);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .pain-quote {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 32px 0 12px;
+            padding: 20px 24px;
+            border-left: 4px solid var(--turquoise);
+            background: var(--turquoise-light);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pain-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* ========== FAIL BOX ========== */
+        .fail-box {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 32px 0;
+        }
+
+        .fail-box h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+        }
+
+        .fail-list {
+            list-style: none;
+        }
+
+        .fail-list li {
+            padding: 6px 0 6px 28px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .fail-list li::before {
+            content: '→';
+            position: absolute;
+            left: 4px;
+            color: var(--text-muted);
+        }
+
+        .fail-result {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .fail-punchline {
+            font-weight: 700;
+            color: var(--turquoise-dark);
+            margin-top: 10px;
+            font-size: 1.05rem;
+        }
+
+        /* ========== FIT SECTION ========== */
+        .fit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 600px) {
+            .fit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fit-card {
+            border-radius: 12px;
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .fit-card.yes {
+            background: var(--green-bg);
+            border-color: var(--turquoise-border);
+        }
+
+        .fit-card.no {
+            background: var(--red-bg);
+            border-color: rgba(231, 76, 60, 0.15);
+        }
+
+        .fit-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .fit-card.yes h3 {
+            color: var(--turquoise-dark);
+        }
+
+        .fit-card.no h3 {
+            color: var(--red-soft);
+        }
+
+        .fit-card ul {
+            list-style: none;
+        }
+
+        .fit-card ul li {
+            padding: 5px 0 5px 26px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .fit-card.yes ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--turquoise);
+            font-weight: 700;
+        }
+
+        .fit-card.no ul li::before {
+            content: '✕';
+            position: absolute;
+            left: 0;
+            color: var(--red-soft);
+            font-weight: 700;
+        }
+
+        .fit-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* ========== FLOW / SYSTEM SECTION ========== */
+        .framework-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 600px) {
+            .framework-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .step-item {
+            text-align: center;
+            padding: 20px 12px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .step-item:hover {
+            border-color: var(--turquoise-border);
+            box-shadow: 0 2px 12px rgba(0, 191, 166, 0.08);
+        }
+
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--turquoise);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Insight list (replaces pain-list in flow section) */
+        .insight-list {
+            list-style: none;
+            margin: 20px 0 32px;
+        }
+
+        .insight-list li {
+            padding: 10px 0 10px 32px;
+            position: relative;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .insight-list li::before {
+            content: '→';
+            position: absolute;
+            left: 6px;
+            color: var(--turquoise);
+            font-weight: 700;
+        }
+
+        .session-list {
+            list-style: none;
+            margin: 24px 0;
+            counter-reset: session;
+        }
+
+        .session-list li {
+            counter-increment: session;
+            padding: 18px 20px 18px 56px;
+            position: relative;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .session-list li:hover {
+            border-color: var(--turquoise-border);
+            box-shadow: 0 2px 8px rgba(0, 191, 166, 0.06);
+        }
+
+        .session-list li::before {
+            content: counter(session);
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 26px;
+            height: 26px;
+            background: var(--turquoise-light);
+            color: var(--turquoise-dark);
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transform-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 600px) {
+            .transform-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .transform-item {
+            padding: 14px 18px 14px 42px;
+            position: relative;
+            background: var(--green-bg);
+            border: 1px solid var(--turquoise-border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .transform-item::before {
+            content: '✓';
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            color: var(--turquoise);
+            font-weight: 700;
+        }
+
+        .flow-closer {
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-top: 28px;
+        }
+
+        /* ========== CREDIT SECTION ========== */
+        .credit-card {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px;
+            margin: 28px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 600px) {
+            .credit-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 28px;
+            }
+        }
+
+        .credit-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: var(--bg-off);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border: 3px solid var(--turquoise-border);
+        }
+
+        .credit-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .credit-info .role {
+            color: var(--turquoise-dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .credit-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .credit-stats {
+            display: flex;
+            gap: 28px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .credit-stat {
+            text-align: center;
+        }
+
+        .credit-stat .num {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--turquoise-dark);
+        }
+
+        .credit-stat .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== FAQ SECTION ========== */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 20px 40px 20px 0;
+            text-align: left;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--turquoise-dark);
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--turquoise);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '−';
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 20px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ========== PRICING SECTION (DARK) ========== */
+        .pricing-wrapper {
+            background: var(--bg-dark);
+            color: var(--text-on-dark);
+        }
+
+        .pricing-section {
+            padding: 80px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-section .section-title {
+            color: var(--text-on-dark);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 700px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 380px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .pricing-card {
+            background: var(--bg-dark-soft);
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--turquoise);
+            box-shadow: 0 0 40px rgba(0, 191, 166, 0.12);
+            background: linear-gradient(180deg, rgba(0, 191, 166, 0.05) 0%, var(--bg-dark-soft) 100%);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--turquoise);
+            color: var(--bg-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 18px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-on-dark-muted);
+        }
+
+        .pricing-card.featured .pricing-name {
+            color: var(--text-on-dark);
+        }
+
+        .pricing-price {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--text-on-dark);
+        }
+
+        .pricing-card.featured .pricing-price {
+            color: var(--turquoise);
+        }
+
+        .pricing-unit {
+            font-size: 0.8rem;
+            color: var(--text-on-dark-muted);
+            margin-bottom: 20px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .pricing-features li {
+            padding: 5px 0 5px 24px;
+            position: relative;
+            color: var(--text-on-dark-muted);
+            font-size: 0.9rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--turquoise);
+            font-weight: 700;
+        }
+
+        .pricing-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .pricing-btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-dark);
+            color: var(--text-on-dark-muted);
+        }
+
+        .pricing-btn-outline:hover {
+            border-color: var(--turquoise);
+            color: var(--turquoise);
+        }
+
+        .pricing-btn-fill {
+            background: var(--turquoise);
+            color: var(--bg-dark);
+        }
+
+        .pricing-btn-fill:hover {
+            background: var(--turquoise-dark);
+            box-shadow: 0 0 24px rgba(0, 191, 166, 0.25);
+        }
+
+        /* ========== FINAL CTA (DARK) ========== */
+        .final-wrapper {
+            background: var(--bg-dark);
+            color: var(--text-on-dark);
+        }
+
+        .final-cta {
+            text-align: center;
+            padding: 80px 24px 100px;
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 191, 166, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .final-cta > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-cta .section-title {
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            margin-bottom: 16px;
+            color: var(--text-on-dark);
+        }
+
+        .final-cta .body-text {
+            margin-bottom: 40px;
+            color: var(--text-on-dark-muted);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 28px 24px;
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border-dark);
+            font-size: 0.8rem;
+            color: var(--text-on-dark-muted);
+        }
+
+        /* ========== SCROLL ANIMATION ========== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== PLACEHOLDER ========== */
+        .placeholder-note {
+            display: inline-block;
+            background: var(--turquoise-light);
+            border: 1px dashed var(--turquoise-border);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            color: var(--turquoise-dark);
+            margin: 8px 0;
+        }
+
+        /* ========== SECTION DIVIDER (light) ========== */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* ========== HERO LOGO ========== */
+        .hero-logo-img {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            margin: 0 auto 24px;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* ========== PROOF GALLERY ========== */
+        .proof-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 600px) {
+            .proof-gallery {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .proof-card {
+            background: var(--bg-dark);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .proof-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .proof-card-img-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 360px;
+            overflow: hidden;
+            background: #0D1117;
+        }
+
+        .proof-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .proof-card-caption {
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--turquoise);
+            background: var(--bg-dark);
+        }
+
+        /* ========== CREDIT PHOTO REAL ========== */
+        .credit-photo-real {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 3px solid var(--turquoise-border);
+        }
+
+        /* ========== STATS HIGHLIGHT ========== */
+        .stats-highlight {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 600px) {
+            .stats-highlight {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px 12px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .stat-box .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--turquoise-dark);
+            line-height: 1.2;
+        }
+
+        .stat-box .stat-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== SECTION 1: HERO / OUTCOME (DARK BG) ===== -->
+    <div class="hero-wrapper">
+        <section class="hero" id="hero">
+            <img src="assets/whoop_logo.png" alt="WHOOP Logo" class="hero-logo-img">
+            <div class="hero-badge">WHOOP LAB by Golf</div>
+
+            <h1 class="headline">
+                จากใส่ WHOOP แล้วงงกับ Data<br>
+                <span class="accent">สู่คนที่ใช้มันตัดสินใจทุกวันอย่างมั่นใจ</span>
+            </h1>
+            <div class="hero-timeframe">ใน 3 ชั่วโมง</div>
+            <p class="hero-target">สำหรับคนที่มี WHOOP แล้ว แต่ยังไม่แน่ใจว่าควรเชื่อค่าที่มันบอกยังไง</p>
+
+            <div class="cta-wrapper" style="margin-top: 24px;">
+                <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn cta-btn-on-dark">เข้าร่วม WHOOP LAB</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== SECTION 2: PROBLEM (WHITE BG) ===== -->
+    <section class="section fade-up" id="problem">
+        <span class="section-label">Problem</span>
+        <h2 class="section-title">คุณอาจกำลังเป็นแบบนี้</h2>
+
+        <ul class="pain-list">
+            <li>เปิดดู Recovery แล้วก็ยังไม่รู้ควรซ้อมหนักไหม</li>
+            <li>เห็น Strain แต่ไม่แน่ใจว่าควรเพิ่มหรือลด</li>
+            <li>หลับครบ 8 ชั่วโมง แต่ยังรู้สึกพัง</li>
+            <li>ใส่มาเป็นเดือน แต่ชีวิตไม่ได้เปลี่ยนอะไรชัดเจน</li>
+        </ul>
+
+        <div class="pain-quote">คุณไม่ได้อ่อน — WHOOP แค่ให้ข้อมูล แต่มันไม่ได้สอนคุณ "ตัดสินใจ"</div>
+        <p class="pain-sub">สุดท้ายคุณกลับไปใช้ความรู้สึกเหมือนเดิม</p>
+
+        <div class="fail-box">
+            <h3>วิธีที่คนส่วนใหญ่ทำ:</h3>
+            <ul class="fail-list">
+                <li>ดูค่าแยกส่วน ไม่เห็นภาพรวม</li>
+                <li>อ่านรีวิวหรือดู YouTube กระจัดกระจาย</li>
+                <li>ลองผิดลองถูกเองเป็นปี</li>
+            </ul>
+            <p class="fail-result">
+                ผลคือ ใช้ฟีเจอร์ไม่ถึงครึ่ง Subscription เดินทุกเดือน แต่คุณยังไม่มั่นใจเวลาตัดสินใจ
+            </p>
+            <p class="fail-punchline">
+                ปัญหาไม่ใช่ Data เยอะเกินไป — ปัญหาคือไม่มี "ระบบคิด" เชื่อมมันเข้าด้วยกัน
+            </p>
+        </div>
+
+        <div class="cta-wrapper">
+            <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn">เข้าร่วม WHOOP LAB</a>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 3: FIT & BOUNDARY (ALT BG) ===== -->
+    <div class="section-alt">
+        <section class="section fade-up" id="fit">
+            <span class="section-label">Fit</span>
+            <h2 class="section-title">นี่คือคอร์สสำหรับคนที่ "อยากเข้าใจ"<br>ไม่ใช่แค่ใส่เท่ ๆ</h2>
+
+            <div class="fit-grid">
+                <div class="fit-card yes">
+                    <h3>เหมาะกับคุณถ้า:</h3>
+                    <ul>
+                        <li>คุณเพิ่งได้ WHOOP มาใหม่</li>
+                        <li>คุณใช้มาสักพักแต่ยังงงกับ Data</li>
+                        <li>คุณเป็นคนชอบ Data และอยากใช้มันจริง</li>
+                    </ul>
+                </div>
+                <div class="fit-card no">
+                    <h3>ไม่เหมาะถ้า:</h3>
+                    <ul>
+                        <li>คุณอยากได้คอร์สสอนสุขภาพลึกระดับโภชนาการ/ฮอร์โมน</li>
+                        <li>คุณไม่มี WHOOP และไม่ได้ตั้งใจใช้มันจริงจัง</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="fit-footer">นี่คือคอร์สสำหรับคนที่ "อยากเข้าใจ" ไม่ใช่แค่ใส่เท่ ๆ</p>
+
+            <div class="cta-wrapper">
+                <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn">เข้าร่วม WHOOP LAB</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== SECTION 4: FLOW / SYSTEM (WHITE BG) ===== -->
+    <section class="section fade-up" id="flow">
+        <span class="section-label">The System</span>
+        <h2 class="section-title">WHOOP LAB SYSTEM</h2>
+        <p class="body-text">ไม่ใช่คอร์สสอน Feature — มันคือ <span class="bold-text">Framework 4 ขั้น</span> ที่ทำให้คุณเปลี่ยนจาก "ดู Data" เป็น "ใช้ Data"</p>
+
+        <div class="framework-steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-label">เข้าใจ</div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-label">เชื่อมโยง</div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-label">ทดลอง</div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-label">ปรับใช้</div>
+            </div>
+        </div>
+
+        <p class="body-text">เมื่อเข้าใจ Framework นี้ คุณจะเห็นว่า:</p>
+        <ul class="insight-list">
+            <li>Recovery ไม่ได้ดูเดี่ยว ๆ</li>
+            <li>Strain ไม่ได้แปลว่าต้องหนักเสมอ</li>
+            <li>Sleep ไม่ได้วัดแค่ชั่วโมง</li>
+            <li>Stress มีผลจริงกับตัวเลขที่คุณเห็น</li>
+        </ul>
+
+        <div class="section-divider" style="margin: 48px auto;"></div>
+
+        <h3 class="section-title" style="font-size: 1.3rem;">Session เดียวแบบเข้มข้น ครบทั้งระบบ</h3>
+
+        <ol class="session-list">
+            <li>7 วันแรกต้องตั้งค่าอะไรบ้าง</li>
+            <li>เข้าใจ Health, Sleep, Recovery, Strain แบบเชื่อมโยง</li>
+            <li>ตั้ง WHOOP Plan และใช้ Stress Monitor อย่างถูกต้อง</li>
+            <li>เข้าใจ WHOOP Age และวิธีลดแบบมีเหตุผล</li>
+            <li>Secret Tips เพื่อปรับ Recovery และการนอน</li>
+        </ol>
+
+        <div class="section-divider" style="margin: 48px auto;"></div>
+
+        <h3 class="section-title" style="font-size: 1.3rem;">หลัง 3 ชั่วโมง คุณจะสามารถ:</h3>
+
+        <div class="transform-grid">
+            <div class="transform-item">อ่านค่าทุกหมวดโดยไม่งง</div>
+            <div class="transform-item">รู้ว่าตัวเลขไหนสำคัญกับคุณจริง</div>
+            <div class="transform-item">ตัดสินใจได้ว่าควร Push หรือพัก</div>
+            <div class="transform-item">รู้ว่าต้องปรับพฤติกรรมอะไรเพื่อให้ Recovery ดีขึ้น</div>
+            <div class="transform-item">ใช้ WHOOP AI โดยไม่สับสน</div>
+            <div class="transform-item">จบใน Session เดียว ไม่ต้องเรียนหลายสัปดาห์</div>
+        </div>
+
+        <p class="flow-closer">คุณจะไม่กลับไปดู Data แบบลอย ๆ อีก</p>
+
+        <div class="cta-wrapper">
+            <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn">เข้าร่วม WHOOP LAB</a>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 5: YOUR CREDIT (ALT BG) ===== -->
+    <div class="section-alt">
+        <section class="section fade-up" id="credit">
+            <span class="section-label">Your Instructor</span>
+            <h2 class="section-title">ทำไมต้องเชื่อผม?</h2>
+
+            <div class="credit-card">
+                <img src="assets/Golf_Profile.jpg" alt="Golf - Chayanant Kosol" class="credit-photo-real">
+                <div class="credit-info">
+                    <h3>Golf — Chayanant Kosol</h3>
+                    <p class="role">WHOOP Power User / Data-Driven Optimization</p>
+                    <p>
+                        ใช้ WHOOP มาอย่างจริงจัง ไม่ใช่แค่ใส่เท่ ๆ แต่ศึกษา Data ทุกวัน จนเข้าใจว่าตัวเลขไหนสำคัญจริง และนำมาปรับพฤติกรรมจนเห็นผลลัพธ์ที่วัดได้
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stats Highlight -->
+            <div class="stats-highlight">
+                <div class="stat-box">
+                    <div class="stat-value">Top 3%</div>
+                    <div class="stat-desc">Sleep Performer</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">99%</div>
+                    <div class="stat-desc">Peak Recovery</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-desc">Best Sleep</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">Lv.16</div>
+                    <div class="stat-desc">369 Recoveries</div>
+                </div>
+            </div>
+
+            <!-- Proof Gallery -->
+            <h3 class="section-title" style="font-size: 1.2rem; margin-top: 40px; text-align: center;">ผลลัพธ์จริงจาก WHOOP</h3>
+
+            <div class="proof-gallery">
+                <div class="proof-card">
+                    <div class="proof-card-img-wrap">
+                        <img src="assets/top_sleep_performer.png" alt="2025 Top Sleep Performer - Top 3%">
+                    </div>
+                    <div class="proof-card-caption">2025 Sleep Top Performer — Top 3%</div>
+                </div>
+                <div class="proof-card">
+                    <div class="proof-card-img-wrap">
+                        <img src="assets/best_recovery.png" alt="Best Recovery 99% - Average 90%">
+                    </div>
+                    <div class="proof-card-caption">Avg Recovery 90% — Peak 99%</div>
+                </div>
+                <div class="proof-card">
+                    <div class="proof-card-img-wrap">
+                        <img src="assets/whoop_age_reduce.png" alt="WHOOP Age ลดจาก 37.8 เป็น 29.2">
+                    </div>
+                    <div class="proof-card-caption">WHOOP Age ลดลง 8.6 ปี</div>
+                </div>
+            </div>
+
+            <div class="cta-wrapper">
+                <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn">เข้าร่วม WHOOP LAB</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== SECTION 6: Q&A (WHITE BG) ===== -->
+    <section class="section fade-up" id="faq">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">คำถามที่คุณอาจสงสัย</h2>
+
+        <div class="faq-item">
+            <button class="faq-question">ต้องใช้ WHOOP รุ่นไหน?</button>
+            <div class="faq-answer">
+                <p>ใช้ได้ทุกรุ่นครับ ไม่ว่าจะ WHOOP 4.0 หรือรุ่นก่อนหน้า เนื้อหาครอบคลุมทุก version</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">เรียนสดหรือดูย้อนหลังได้?</button>
+            <div class="faq-answer">
+                <p>ดูย้อนหลังได้ที่ Website ของทางเพจครับ</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">ไม่มีพื้นฐานเรื่อง Data เลยได้ไหม?</button>
+            <div class="faq-answer">
+                <p>ได้ครับ คอร์สนี้ออกแบบมาให้ทุกคนเข้าใจได้ ไม่ต้องมีพื้นฐาน Data หรือสุขภาพ แค่มี WHOOP อยู่ข้อมือก็พอ</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">เรียนจบแล้วถามเพิ่มได้ไหม?</button>
+            <div class="faq-answer">
+                <p>ได้ครับ เจอกันได้ที่ Facebook Page <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" style="color: var(--turquoise-dark); text-decoration: underline;">WHOOP Lab by Golf</a> ได้เลยครับ</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">3 ชั่วโมง เรียนรู้ได้จริงเหรอ?</button>
+            <div class="faq-answer">
+                <p>ได้ครับ เพราะเราไม่ได้สอน feature ทีละปุ่ม แต่สอน "ระบบคิด" ที่เชื่อมทุกอย่างเข้าด้วยกัน เมื่อเข้าใจ framework แล้ว ค่าทุกตัวจะ make sense ทันที</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">ต่างจากดู YouTube หรืออ่าน blog ยังไง?</button>
+            <div class="faq-answer">
+                <p>YouTube สอนแบบกระจัดกระจาย ดูเสร็จยังเชื่อมไม่ถูก WHOOP LAB สอนเป็นระบบ จบแล้วใช้ได้เลย ไม่ต้องปะติดปะต่อเอง</p>
+            </div>
+        </div>
+
+        <div class="cta-wrapper">
+            <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn">เข้าร่วม WHOOP LAB</a>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 7: FREE OFFER (DARK BG) ===== -->
+    <div class="pricing-wrapper" id="pricing">
+        <section class="pricing-section fade-up">
+            <span class="section-label section-label-dark">Workshop</span>
+            <h2 class="section-title" style="text-align: center;">เข้าร่วมได้ฟรี ไม่มีค่าใช้จ่าย</h2>
+            <p style="text-align: center; color: var(--text-on-dark-muted); max-width: 520px; margin: 0 auto 40px; font-size: 1rem; line-height: 1.7;">
+                ผมอยากให้คนที่ใช้ WHOOP ได้ใช้มันอย่างเต็มศักยภาพจริง ๆ<br>
+                เลยเปิด Workshop นี้ให้เข้าร่วมฟรี
+            </p>
+
+            <div class="pricing-card featured" style="max-width: 420px; margin: 0 auto;">
+                <div class="pricing-badge">ฟรี</div>
+                <div class="pricing-name">WHOOP LAB Workshop</div>
+                <div class="pricing-price" style="color: var(--turquoise);">0 ฿</div>
+                <div class="pricing-unit">ไม่มีค่าใช้จ่าย</div>
+                <ul class="pricing-features">
+                    <li>Workshop สด 3 ชั่วโมง</li>
+                    <li>Framework 4 ขั้น เข้าใจ → เชื่อมโยง → ทดลอง → ปรับใช้</li>
+                    <li>ครอบคลุม Recovery, Sleep, Strain, Stress</li>
+                    <li>Secret Tips ปรับ Recovery และการนอน</li>
+                    <li>Q&A ถามตอบหลังจบ Session</li>
+                </ul>
+                <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="pricing-btn pricing-btn-fill">ลงทะเบียนเข้าร่วมฟรี</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== SECTION 8: FINAL CTA (DARK BG - continues) ===== -->
+    <div class="final-wrapper">
+        <section class="final-cta fade-up" id="final">
+            <h2 class="section-title">
+                คุณมี Data อยู่แล้วทุกวัน
+            </h2>
+            <p class="body-text">
+                คำถามคือ — จะปล่อยให้มันผ่านตาไปเรื่อย ๆ<br>
+                หรือจะ<strong style="color: var(--turquoise);"> เข้าใจมันจริง ๆ ภายใน 3 ชั่วโมง</strong>
+            </p>
+            <div class="cta-wrapper">
+                <a href="https://www.facebook.com/profile.php?id=61579807149229" target="_blank" class="cta-btn cta-btn-on-dark cta-btn-large">ลงทะเบียนฟรี</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>WHOOP LAB &copy; 2025 &mdash; Build with Data, Decide with Confidence.</p>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll fade-in animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
